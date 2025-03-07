@@ -9,9 +9,13 @@ var configuration = new ConfigurationBuilder()
     .Build();
 
 // Add services to the container.
+
+builder.Services.AddDbContext<ShiftsDbContext>(opt => opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
-builder.Services.AddDbContext<ShiftsDbContext>(opt => opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+// Build the application
 
 var app = builder.Build();
 
@@ -21,5 +25,11 @@ if (app.Environment.IsDevelopment())
     app.MapSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
 
 app.Run();
