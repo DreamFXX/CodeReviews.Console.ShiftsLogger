@@ -1,0 +1,6 @@
+@Shiftslogger.DreamFXX_HostAddress = http://localhost:5062
+
+GET {{Shiftslogger.DreamFXX_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
