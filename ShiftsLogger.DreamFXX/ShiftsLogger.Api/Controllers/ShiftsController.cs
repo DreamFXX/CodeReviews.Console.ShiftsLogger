@@ -97,4 +97,8 @@ public class ShiftsController : ControllerBase
         return NoContent();
     }
 
+    private bool ShiftExists(int id)
+    {
+        return _context.Shifts.Any(e => e.Id == id);
+    }
 }
