@@ -65,7 +65,7 @@ public class ShiftsController : ControllerBase
         var openShift = await _context.Shifts.FirstOrDefaultAsync(s => s.EndTime == null);
         if (openShift != null)
         {
-            return BadRequest("There is already an open shift. End it before starting a new one.");
+            return BadRequest("Another shift is open right now! Close it first and then start a new one.");
 
         }
 
