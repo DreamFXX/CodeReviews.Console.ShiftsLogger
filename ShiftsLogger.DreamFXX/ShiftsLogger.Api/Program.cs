@@ -14,6 +14,16 @@ builder.Services.AddDbContext<ShiftsDbContext>(opt =>
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
@@ -25,8 +35,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors();
+
 app.UseAuthorization();
 
+app.UseExceptionHandler("/error");
+
 app.MapControllers();
+app.MapHealthChecks("/health");
 
 app.Run();

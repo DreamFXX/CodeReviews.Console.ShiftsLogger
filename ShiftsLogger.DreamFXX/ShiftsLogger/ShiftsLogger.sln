@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35828.75 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShiftsLogger", "ShiftsLogger.csproj", "{5ED50AC6-7172-42B1-BAE0-297382BD585B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShiftsLogger.Client", "..\ShiftsLogger.Client\ShiftsLogger.Client.csproj", "{223A89A9-B6C0-E58A-F83F-58DAE68B7864}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShiftsLogger.Api", "..\ShiftsLogger.Api\ShiftsLogger.Api.csproj", "{31B43088-C28F-DB4A-9B57-3AE396B281E5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5ED50AC6-7172-42B1-BAE0-297382BD585B}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{5ED50AC6-7172-42B1-BAE0-297382BD585B}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{5ED50AC6-7172-42B1-BAE0-297382BD585B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5ED50AC6-7172-42B1-BAE0-297382BD585B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{223A89A9-B6C0-E58A-F83F-58DAE68B7864}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{223A89A9-B6C0-E58A-F83F-58DAE68B7864}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{223A89A9-B6C0-E58A-F83F-58DAE68B7864}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{223A89A9-B6C0-E58A-F83F-58DAE68B7864}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31B43088-C28F-DB4A-9B57-3AE396B281E5}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{31B43088-C28F-DB4A-9B57-3AE396B281E5}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{31B43088-C28F-DB4A-9B57-3AE396B281E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31B43088-C28F-DB4A-9B57-3AE396B281E5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5F451B0B-F2A2-4931-AA9B-BF8B91B8AC1F}
+	EndGlobalSection
+EndGlobal

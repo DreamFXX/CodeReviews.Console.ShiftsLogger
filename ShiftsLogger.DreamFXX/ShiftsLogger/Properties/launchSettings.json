@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ShiftsLogger": {
+      "commandName": "Project",
+      "nativeDebugging": true,
+      "sqlDebugging": true,
+      "jsWebView2Debugging": false
+    }
+  }
+}
