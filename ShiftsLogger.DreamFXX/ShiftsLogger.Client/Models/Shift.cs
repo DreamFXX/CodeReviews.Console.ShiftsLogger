@@ -6,13 +6,13 @@ public class Shift
 {
     [JsonPropertyName("id")]
     public int Id { get; set; }
-    [JsonPropertyName("name")]
-    public string Name { get; set; } = string.Empty;
+    [JsonPropertyName("workerName")]
+    public string workerName { get; set; } = string.Empty;
     [JsonPropertyName("start")]
     public DateTime Start { get; set; }
     [JsonPropertyName("end")]
-    public DateTime End { get; set; }
+    public DateTime? End { get; set; }
     [JsonPropertyName("duration")]
-    public TimeSpan Duration { get; set; }
+    public TimeSpan? Duration { get; set; }
 
 }

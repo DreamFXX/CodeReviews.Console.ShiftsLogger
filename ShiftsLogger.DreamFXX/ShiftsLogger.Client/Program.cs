@@ -1,3 +1,6 @@
-namespace ShiftsLogger.Client;
+using ShiftsLogger.Client.Services;
 
-new Manager manager = new Manager();
+var shiftsLoggerService = new ShiftsLoggerService();
+
+await shiftsLoggerService.Run();
+
