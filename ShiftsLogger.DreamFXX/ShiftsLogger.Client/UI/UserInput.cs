@@ -2,7 +2,6 @@
 using ShiftsLogger.Client.Services;
 
 namespace ShiftsLogger.Client.UI;
-
 public class UserInput
 {
     private readonly ValidatorService _validatorService;
@@ -11,12 +10,16 @@ public class UserInput
         _validatorService = validatorService;
     }
 
-    public GetShiftStartDetails()
+    public WorkerNameDto GetDetailsForStart()
     {
-        var shift = new WorkerNameDto();
+        var shiftStart = new WorkerNameDto();
 
-        return null;
+        shiftStart.WorkerName = _validatorService.ValidateString(Console.ReadLine());
+        if (shiftStart.WorkerName == null)
+        {
+            Console.WriteLine("Worker name is required. Please enter a valid worker name!");
+            return GetDetailsForStart();
+        }
+        return shiftStart;
     }
-
-
 }
