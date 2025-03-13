@@ -11,10 +11,15 @@ public class ShiftsLoggerService
 
     public ShiftsLoggerService()
     {
-        _httpClient = new HttpClient { BaseAddress = new Uri("https://localhost:7299") };
+        _httpClient = new HttpClient { BaseAddress = new Uri("http://localhost:5031") };
         _apiService = new APIService(_httpClient);
         _validatorService = new ValidatorService();
-        _userInput = new UserInput();
+        _userInput = new UserInput(_validatorService);
+    }
+
+    public static void Run(string args[])
+    {
+        // Run the application
     }
 
 }

@@ -7,7 +7,7 @@ public class Shift
     [JsonPropertyName("id")]
     public int Id { get; set; }
     [JsonPropertyName("workerName")]
-    public string workerName { get; set; } = string.Empty;
+    public string WorkerName { get; set; } = string.Empty;
     [JsonPropertyName("start")]
     public DateTime Start { get; set; }
     [JsonPropertyName("end")]

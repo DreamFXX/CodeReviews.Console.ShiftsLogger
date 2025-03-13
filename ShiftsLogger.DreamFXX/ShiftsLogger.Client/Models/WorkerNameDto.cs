@@ -1,4 +1,4 @@
-﻿namespace ShiftsLogger.Client.Models;
+﻿namespace ShiftsLogger.Client.Dtos;
 
 public class WorkerNameDto
 {
