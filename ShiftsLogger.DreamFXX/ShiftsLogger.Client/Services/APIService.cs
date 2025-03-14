@@ -44,13 +44,29 @@ public class APIService
     {
         try
         {
-
+            var response = await _httpClient.GetAsync("/api/shifts");
+            response.EnsureSuccessStatusCode();
+            var json = await response.Content.ReadAsStringAsync();
+            var shifts = JsonSerializer.Deserialize<List<Shift>>(json);
+            if (shifts == null)
+            {
+                throw new InvalidOperationException("Failed to deserialize the Shift object. Please, try again.");
+            }
+            return shifts;
         }
-        catch (Exception)
+        catch (HttpRequestException ex)
         {
-
-            throw;
+            Console.WriteLine($"Error: {ex.Message}. Application will now close.");
+            Environment.Exit(-1);
+            return null;
         }
+        catch (InvalidOperationException ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}. Application will now close.");
+            Environment.Exit(-1);
+            return null;
+        }
+
     }
 }
 
