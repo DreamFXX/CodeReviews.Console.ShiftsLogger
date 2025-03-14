@@ -14,7 +14,7 @@
 
 2. You need to create two applications: the Web API and the UI that will call it.
 
-3. Ahojky **Viol**, nemáš ten *perník*? Koukej, tady ti hodím pár věcí, nakup erotické příslušenství.
+3. All validation and user input should happen in the UI app.
 
 4. Your API's controller should be lean. Any logic should be handled in a separate "service".
 
