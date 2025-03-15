@@ -1,5 +1,6 @@
-﻿using ShiftsLogger.Client.Dtos;
+﻿using ShiftsLogger.Client.Models;
 using ShiftsLogger.Client.Services;
+using Spectre.Console;
 
 namespace ShiftsLogger.Client.UI;
 public class UserInput
@@ -10,16 +11,29 @@ public class UserInput
         _validatorService = validatorService;
     }
 
-    public WorkerNameDto GetDetailsForStart()
+    public EmployeeDto GetDetailsForStart()
     {
-        var shiftStart = new WorkerNameDto();
-
-        shiftStart.WorkerName = _validatorService.ValidateString(Console.ReadLine());
-        if (shiftStart.WorkerName == null)
+        AnsiConsole.Markup("[bold]Enter name of the employee:[/]");
+        EmployeeDto? employeeDto = new();
+        employeeDto.EmployeeName = _validatorService.ValidateString(Console.ReadLine());
+        if (employeeDto.EmployeeName == null)
         {
-            Console.WriteLine("Worker name is required. Please enter a valid worker name!");
+            AnsiConsole.WriteLine("[yellow]Worker name is required.[/]");
             return GetDetailsForStart();
         }
-        return shiftStart;
+        return employeeDto;
+    }
+
+    public EmployeeDto GetDetailsForEnd()
+    {
+        AnsiConsole.Markup("[bold]Enter name of the employee:[/]");
+        EmployeeDto? employeeDto = new EmployeeDto();
+        employeeDto.EmployeeName = _validatorService.ValidateString(Console.ReadLine());
+        if (employeeDto.EmployeeName == null)
+        {
+            AnsiConsole.WriteLine("[yellow]Worker name is required.[/]");
+            return GetDetailsForEnd();
+        }
+        return employeeDto;
     }
 }

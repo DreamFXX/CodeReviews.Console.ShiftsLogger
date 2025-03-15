@@ -7,8 +7,10 @@
     },
     "https": {
       "commandName": "Project",
+      "launchBrowser": true,
       "dotnetRunMessages": true,
-      "applicationUrl": "https://localhost:7122;http://localhost:5031"
+      "applicationUrl": "https://localhost:7122;http://localhost:5031",
+      "sqlDebugging": true
     },
     "IIS Express": {
       "commandName": "IISExpress",

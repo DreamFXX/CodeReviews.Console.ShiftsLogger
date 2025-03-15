@@ -1,5 +1,7 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
 using ShiftsLogger.Client.Models;
+using Spectre.Console;
 
 namespace ShiftsLogger.Client.Services;
 public class APIService
@@ -23,19 +25,18 @@ public class APIService
             {
                 throw new InvalidOperationException("Failed to deserialize the Shift object. Please, try again.");
             }
-
             return shift;
         }
         catch (HttpRequestException ex)
         {
             Console.WriteLine($"Error: {ex.Message}. Application will now close.");
-            Environment.Exit(-1);
+            Environment.Exit(0);
             return null;
         }
         catch (InvalidOperationException ex)
         {
             Console.WriteLine($"Error: {ex.Message}. Application will now close.");
-            Environment.Exit(-1);
+            Environment.Exit(0);
             return null;
         }
     }
@@ -47,27 +48,47 @@ public class APIService
             var response = await _httpClient.GetAsync("/api/shifts");
             response.EnsureSuccessStatusCode();
             var json = await response.Content.ReadAsStringAsync();
-            var shifts = JsonSerializer.Deserialize<List<Shift>>(json);
-            if (shifts == null)
-            {
-                throw new InvalidOperationException("Failed to deserialize the Shift object. Please, try again.");
-            }
-            return shifts;
+            return JsonSerializer.Deserialize<List<Shift>>(json);
+        }
+        catch (Exception ex)
+        {
+            AnsiConsole.Markup($"[red]Error retrieving shifts: {ex.Message}[/]");
+            return new List<Shift>();
+        }
+    }
+
+    public async Task<HttpResponseMessage> StartShiftAsync<EmployeeDto>(EmployeeDto employeeDto)
+    {
+        try
+        {
+            var json = JsonSerializer.Serialize(employeeDto);
+            var content = new StringContent(json, Encoding.Unicode, "application/json");
+            return await _httpClient.PostAsync("api/shifts", content);
         }
         catch (HttpRequestException ex)
         {
             Console.WriteLine($"Error: {ex.Message}. Application will now close.");
-            Environment.Exit(-1);
+            Environment.Exit(0);
             return null;
         }
-        catch (InvalidOperationException ex)
+    }
+
+    public async Task<HttpResponseMessage> EndShiftAsync<EmployeeDto>(EmployeeDto employeeName)
+    {
+        try
+        {
+            var json = JsonSerializer.Serialize(employeeName);
+            var content = new StringContent(json, Encoding.Default, "application/json");
+            return await _httpClient.PutAsync("api/shifts", content);
+        }
+        catch (HttpRequestException ex)
         {
             Console.WriteLine($"Error: {ex.Message}. Application will now close.");
-            Environment.Exit(-1);
+            Environment.Exit(0);
             return null;
         }
-
     }
 }
+
 
 
