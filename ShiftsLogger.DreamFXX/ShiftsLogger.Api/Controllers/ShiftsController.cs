@@ -21,6 +21,46 @@ public class ShiftsController : ControllerBase
         return await _context.Shifts.ToListAsync();
     }
 
+    [HttpGet("active")]
+    public async Task<ActionResult<Shift>> GetActiveShift()
+    {
+        var activeShift = await _context.Shifts.FirstOrDefaultAsync(s => s.EndTime == null);
+        if (activeShift == null)
+        {
+            return NotFound("Žádná aktivní směna nebyla nalezena.");
+        }
+        return activeShift;
+    }
+
+    [HttpGet("stats")]
+    public async Task<ActionResult<object>> GetStatistics()
+    {
+        var shifts = await _context.Shifts.ToListAsync();
+        
+        var totalShifts = shifts.Count;
+        var completedShifts = shifts.Count(s => s.EndTime != null);
+        var activeShifts = shifts.Count(s => s.EndTime == null);
+        
+        var totalHours = shifts
+            .Where(s => s.Duration.HasValue)
+            .Sum(s => s.Duration.Value.TotalHours);
+        
+        var averageShiftDuration = completedShifts > 0 
+            ? shifts
+                .Where(s => s.Duration.HasValue)
+                .Average(s => s.Duration.Value.TotalHours) 
+            : 0;
+
+        return new
+        {
+            TotalShifts = totalShifts,
+            CompletedShifts = completedShifts,
+            ActiveShifts = activeShifts,
+            TotalHours = Math.Round(totalHours, 2),
+            AverageShiftDuration = Math.Round(averageShiftDuration, 2)
+        };
+    }
+
     [HttpGet("{id}")]
     public async Task<ActionResult<Shift>> GetShiftById(int id)
     {
@@ -38,7 +78,7 @@ public class ShiftsController : ControllerBase
         var shift = await _context.Shifts.FindAsync(id);
         if (shift == null)
         {
-            return NotFound("Shift not found.");
+            return NotFound("Směna nebyla nalezena.");
         }
 
         if (shift.EndTime != null)
@@ -63,19 +103,18 @@ public class ShiftsController : ControllerBase
         return NoContent();
     }
 
-    // POST: api/Shifts
     [HttpPost]
     public async Task<ActionResult<Shift>> PostShift(EmployeeDto employeeDto)
     {
         var openShift = await _context.Shifts.FirstOrDefaultAsync(s => s.EndTime == null);
         if (openShift != null)
         {
-            return BadRequest("Another shift is currently open! End it first before starting a new one.");
+            return BadRequest("Another shift is open right now! End it first, before starting a new one.");
         }
 
         var shift = new Shift
         {
-            EmployeeName = employeeDto.EmployeeName ?? "N/A",
+            EmployeeName = employeeDto.EmployeeName,
             StartTime = DateTime.Now
         };
         _context.Shifts.Add(shift);
@@ -84,7 +123,6 @@ public class ShiftsController : ControllerBase
         return CreatedAtAction("GetShiftById", new { id = shift.Id }, shift);
     }
 
-    // DELETE: api/Shifts/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteShift(int id)
     {
@@ -92,17 +130,12 @@ public class ShiftsController : ControllerBase
 
         if (shift == null)
         {
-            return NotFound();
+            return NotFound("Shift not found.");
         }
 
         _context.Shifts.Remove(shift);
 
         await _context.SaveChangesAsync();
         return NoContent();
-    }
-
-    private bool ShiftExists(int id)
-    {
-        return _context.Shifts.Any(e => e.Id == id);
     }
 }

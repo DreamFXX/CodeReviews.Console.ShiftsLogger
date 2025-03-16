@@ -478,3 +478,11 @@ $RECYCLE.BIN/
 
 # Rider
 .idea/
+
+# Ble
+.vscode
+.vs
+*.vs
+*.vscode
+[Bbin]/
+obj/

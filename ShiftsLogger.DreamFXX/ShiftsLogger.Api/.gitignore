@@ -1,0 +1,89 @@
+# Složky
+bin/
+obj/
+.vs/
+.vscode/
+TestResults/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Uživatelské soubory
+*.user
+*.userosscache
+*.suo
+*.userprefs
+*.usertasks
+*.dbmdl
+*.jfm
+
+# Soubory Visual Studio
+.vs/
+*.psess
+*.vsp
+*.vspx
+*.sap
+*.[Pp]ublish.xml
+*.[Rr]e[Ss]harper
+
+# Soubory MSBuild
+*_i.c
+*_p.c
+*_i.h
+*.ilk
+*.meta
+*.obj
+*.pch
+*.pdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*.log
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+*.scc
+
+# Soubory Microsoft Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# Soubory Docker
+.dockerignore
+
+# Soubory databáze
+*.mdf
+*.ldf
+*.ndf
+
+# Soubory prostředí
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Soubory závislostí
+*.nupkg
+packages/ 

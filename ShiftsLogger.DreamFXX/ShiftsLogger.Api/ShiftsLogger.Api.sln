@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.35821.62
+VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShiftsLogger.Api", "ShiftsLogger.Api.csproj", "{BAC03514-3002-F5B6-7113-945490BADB23}"
 EndProject
@@ -19,6 +19,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {FA14734C-EA1D-403F-AD79-06F5CEC6695F}
+		SolutionGuid = {45F0F7F7-F012-489F-BA3C-48EC1E893E57}
 	EndGlobalSection
 EndGlobal
