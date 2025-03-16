@@ -60,7 +60,7 @@ public class ShiftsController : ControllerBase
 
     // POST: api/Shifts
     [HttpPost]
-    public async Task<ActionResult<Shift>> PostShift(WorkerNameDto workerName)
+    public async Task<ActionResult<Shift>> PostShift(WorkerNameDto employeeName)
     {
         var openShift = await _context.Shifts.FirstOrDefaultAsync(s => s.EndTime == null);
         if (openShift != null)
@@ -71,7 +71,7 @@ public class ShiftsController : ControllerBase
 
         var shift = new Shift
         {
-            WorkerName = workerName.workerName ?? "Unknown",
+            EmployeeName = employeeName.workerName ?? "Unknown",
             StartTime = DateTime.Now
         };
         _context.Shifts.Add(shift);

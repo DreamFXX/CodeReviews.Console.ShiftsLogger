@@ -1,4 +1,4 @@
-# Web APIs Learning Document
+# Web API Notes
 
 <p Web APIs are the backbone of modern web applications. They allow different systems to communicate and exchange data, enabling rich, dynamic user experiences. Understanding how to build and interact with Web APIs is crucial for creating modern web applications that are responsive and scalable.>
 
