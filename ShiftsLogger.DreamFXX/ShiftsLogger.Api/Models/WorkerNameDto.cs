@@ -1,6 +1,9 @@
-﻿namespace ShiftsLogger.Api.Models;
+﻿using System.Text.Json.Serialization;
 
-public class WorkerNameDto
+namespace ShiftsLogger.Api.Models;
+
+public class EmployeeDto
 {
-    public string? workerName { get; set; }
+    [JsonPropertyName("workerName")]
+    public string? EmployeeName { get; set; }
 }

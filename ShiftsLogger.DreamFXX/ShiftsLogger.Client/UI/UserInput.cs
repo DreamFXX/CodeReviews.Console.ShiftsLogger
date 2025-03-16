@@ -11,29 +11,29 @@ public class UserInput
         _validatorService = validatorService;
     }
 
-    public EmployeeDto GetDetailsForStart()
+    public EmployeeDto GetEmployeeName()
     {
-        AnsiConsole.Markup("[bold]Enter name of the employee:[/]");
-        EmployeeDto? employeeDto = new();
+        AnsiConsole.Markup("[bold]Zadejte jméno zaměstnance:[/] ");
+        EmployeeDto employeeDto = new();
         employeeDto.EmployeeName = _validatorService.ValidateString(Console.ReadLine());
-        if (employeeDto.EmployeeName == null)
+        if (string.IsNullOrWhiteSpace(employeeDto.EmployeeName))
         {
-            AnsiConsole.WriteLine("[yellow]Worker name is required.[/]");
-            return GetDetailsForStart();
+            AnsiConsole.MarkupLine("[yellow]Jméno zaměstnance je povinné.[/]");
+            return GetEmployeeName();
         }
         return employeeDto;
     }
 
-    public EmployeeDto GetDetailsForEnd()
+    public int GetShiftId()
     {
-        AnsiConsole.Markup("[bold]Enter name of the employee:[/]");
-        EmployeeDto? employeeDto = new EmployeeDto();
-        employeeDto.EmployeeName = _validatorService.ValidateString(Console.ReadLine());
-        if (employeeDto.EmployeeName == null)
+        AnsiConsole.Markup("[bold]Zadejte ID směny:[/] ");
+        string input = Console.ReadLine() ?? "";
+        if (int.TryParse(input, out int shiftId) && shiftId > 0)
         {
-            AnsiConsole.WriteLine("[yellow]Worker name is required.[/]");
-            return GetDetailsForEnd();
+            return shiftId;
         }
-        return employeeDto;
+        
+        AnsiConsole.MarkupLine("[yellow]Neplatné ID směny. Zadejte prosím kladné číslo.[/]");
+        return GetShiftId();
     }
 }

@@ -4,15 +4,14 @@ namespace ShiftsLogger.Client.Models;
 
 public class Shift
 {
-    [JsonPropertyName("Id")]
+    [JsonPropertyName("id")]
     public int Id { get; set; }
-    [JsonPropertyName("Employee")]
+    [JsonPropertyName("employeeName")]
     public string Employee { get; set; } = string.Empty;
-    [JsonPropertyName("Start")]
+    [JsonPropertyName("startTime")]
     public DateTime Start { get; set; }
-    [JsonPropertyName("End")]
+    [JsonPropertyName("endTime")]
     public DateTime? End { get; set; }
-    [JsonPropertyName("Duration")]
+    [JsonPropertyName("duration")]
     public TimeSpan? Duration { get; set; }
-
 }

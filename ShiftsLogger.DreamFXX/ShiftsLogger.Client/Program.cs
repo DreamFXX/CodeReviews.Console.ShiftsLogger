@@ -1,4 +1,5 @@
 using ShiftsLogger.Client.Services;
+using Spectre.Console;
 
 var shiftsLoggerService = new ShiftsLoggerService();
 try
@@ -7,7 +8,9 @@ try
 }
 catch (Exception ex)
 {
-    Console.WriteLine($"Critical error: {ex.Message}");
+    AnsiConsole.MarkupLine($"[red]Kritická chyba: {ex.Message}[/]");
+    Console.WriteLine("Stiskněte libovolnou klávesu pro ukončení...");
+    Console.ReadKey();
 }
 
 

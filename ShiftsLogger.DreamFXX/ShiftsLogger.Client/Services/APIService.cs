@@ -16,26 +16,26 @@ public class APIService
     {
         try
         {
-            var response = await _httpClient.GetAsync($"/api/shifts/{shiftId}");
+            var response = await _httpClient.GetAsync($"api/shifts/{shiftId}");
             response.EnsureSuccessStatusCode();
             var json = await response.Content.ReadAsStringAsync();
             var shift = JsonSerializer.Deserialize<Shift>(json);
 
             if (shift == null)
             {
-                throw new InvalidOperationException("Failed to deserialize the Shift object. Please, try again.");
+                throw new InvalidOperationException("Deserializace objektu Shift se nezdařila. Zkuste to prosím znovu.");
             }
             return shift;
         }
         catch (HttpRequestException ex)
         {
-            Console.WriteLine($"Error: {ex.Message}. Application will now close.");
+            AnsiConsole.Markup($"[red]Chyba: {ex.Message}. Aplikace bude nyní ukončena.[/]");
             Environment.Exit(0);
             return null;
         }
         catch (InvalidOperationException ex)
         {
-            Console.WriteLine($"Error: {ex.Message}. Application will now close.");
+            AnsiConsole.Markup($"[red]Chyba: {ex.Message}. Aplikace bude nyní ukončena.[/]");
             Environment.Exit(0);
             return null;
         }
@@ -45,45 +45,43 @@ public class APIService
     {
         try
         {
-            var response = await _httpClient.GetAsync("/api/shifts");
+            var response = await _httpClient.GetAsync("api/shifts");
             response.EnsureSuccessStatusCode();
             var json = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<List<Shift>>(json);
+            return JsonSerializer.Deserialize<List<Shift>>(json) ?? new List<Shift>();
         }
         catch (Exception ex)
         {
-            AnsiConsole.Markup($"[red]Error retrieving shifts: {ex.Message}[/]");
+            AnsiConsole.Markup($"[red]Chyba při načítání směn: {ex.Message}[/]");
             return new List<Shift>();
         }
     }
 
-    public async Task<HttpResponseMessage> StartShiftAsync<EmployeeDto>(EmployeeDto employeeDto)
+    public async Task<HttpResponseMessage> StartShiftAsync(EmployeeDto employeeDto)
     {
         try
         {
             var json = JsonSerializer.Serialize(employeeDto);
-            var content = new StringContent(json, Encoding.Unicode, "application/json");
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
             return await _httpClient.PostAsync("api/shifts", content);
         }
         catch (HttpRequestException ex)
         {
-            Console.WriteLine($"Error: {ex.Message}. Application will now close.");
+            AnsiConsole.Markup($"[red]Chyba: {ex.Message}. Aplikace bude nyní ukončena.[/]");
             Environment.Exit(0);
             return null;
         }
     }
 
-    public async Task<HttpResponseMessage> EndShiftAsync<EmployeeDto>(EmployeeDto employeeName)
+    public async Task<HttpResponseMessage> EndShiftAsync(int id)
     {
         try
         {
-            var json = JsonSerializer.Serialize(employeeName);
-            var content = new StringContent(json, Encoding.Default, "application/json");
-            return await _httpClient.PutAsync("api/shifts", content);
+            return await _httpClient.PutAsync($"api/shifts/{id}", null);
         }
         catch (HttpRequestException ex)
         {
-            Console.WriteLine($"Error: {ex.Message}. Application will now close.");
+            AnsiConsole.Markup($"[red]Chyba: {ex.Message}. Aplikace bude nyní ukončena.[/]");
             Environment.Exit(0);
             return null;
         }

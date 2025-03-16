@@ -13,7 +13,7 @@ public class ShiftsLoggerService
 
     public ShiftsLoggerService()
     {
-        _httpClient = new HttpClient { BaseAddress = new Uri("http://localhost:5031") };
+        _httpClient = new HttpClient { BaseAddress = new Uri("http://localhost:5090") };
         _apiService = new APIService(_httpClient);
         _validatorService = new ValidatorService();
         _userInput = new UserInput(_validatorService);
@@ -26,10 +26,10 @@ public class ShiftsLoggerService
             AnsiConsole.Clear();
             var menuRoutes = new List<MenuRoute>
             {
-                new MenuRoute("Start Shift", async () => await StartShift()),
-                new MenuRoute("End Shift", async () => await EndShift()),
-                new MenuRoute("View Shift", async () => await ViewShifts()),
-                new MenuRoute("Exit", () =>
+                new MenuRoute("Začít směnu", async () => await StartShift()),
+                new MenuRoute("Ukončit směnu", async () => await EndShift()),
+                new MenuRoute("Zobrazit směny", async () => await ViewShifts()),
+                new MenuRoute("Konec", () =>
                 {
                     Environment.Exit(0);
                     return Task.CompletedTask;
@@ -38,56 +38,60 @@ public class ShiftsLoggerService
 
             var selectedRoute = AnsiConsole.Prompt(
                 new SelectionPrompt<MenuRoute>()
-                .Title("[yellow on bold]Welcome to your Shift Management System![/]\n-select an option-")
+                .Title("[yellow on bold]Vítejte v systému správy směn![/]\n-vyberte možnost-")
                 .PageSize(10)
-                .MoreChoicesText("[grey](Move up and down to reveal more options)[/]")
+                .MoreChoicesText("[grey](Pro zobrazení dalších možností použijte šipky nahoru a dolů)[/]")
                 .AddChoices(menuRoutes)
                 );
 
             await selectedRoute.Action();
+            Console.WriteLine("\nStiskněte libovolnou klávesu pro návrat do menu...");
             Console.ReadKey();
         }
     }
 
     private async Task StartShift()
     {
-        AnsiConsole.Markup("[yellow on bold]Enter the name of the employee starting the shift:[/]");
-        var employeeName = _userInput.GetDetailsForStart();
-        var response = await _apiService.StartShiftAsync(employeeName);
+        AnsiConsole.MarkupLine("[yellow on bold]Zahájení nové směny[/]");
+        var employeeDto = _userInput.GetEmployeeName();
+        var response = await _apiService.StartShiftAsync(employeeDto);
 
         if (response.IsSuccessStatusCode)
         {
-            AnsiConsole.Markup("[green]Shift started successfully![/]");
+            AnsiConsole.MarkupLine("[green]Směna byla úspěšně zahájena![/]");
         }
         else
         {
-            AnsiConsole.Markup($"[red on bold]Failed to start the shift. Error: {response.StatusCode}[/]");
+            var error = await response.Content.ReadAsStringAsync();
+            AnsiConsole.MarkupLine($"[red on bold]Nepodařilo se zahájit směnu. Chyba: {error}[/]");
         }
     }
 
     private async Task ViewShifts()
     {
+        AnsiConsole.MarkupLine("[yellow on bold]Seznam směn[/]");
         var shifts = await _apiService.GetAllShiftsAsync();
         if (shifts == null || !shifts.Any())
         {
-            AnsiConsole.Markup("[yellow]No shifts found..[/]");
+            AnsiConsole.MarkupLine("[yellow]Nebyly nalezeny žádné směny.[/]");
             return;
         }
 
         var table = new Table();
         table.AddColumn("ID");
-        table.AddColumn("Employee");
-        table.AddColumn("Start");
-        table.AddColumn("End");
-        table.AddColumn("Duration");
+        table.AddColumn("Zaměstnanec");
+        table.AddColumn("Začátek");
+        table.AddColumn("Konec");
+        table.AddColumn("Trvání");
+        
         foreach (var shift in shifts)
         {
             table.AddRow(
-            shift.Id.ToString(),
-            shift.Employee,
-            shift.Start.ToString(),
-            shift.End?.ToString() ?? "Ongoing",
-            shift.Duration?.ToString() ?? "N/A"
+                shift.Id.ToString(),
+                shift.Employee,
+                shift.Start.ToString("dd.MM.yyyy HH:mm"),
+                shift.End?.ToString("dd.MM.yyyy HH:mm") ?? "Probíhá",
+                shift.Duration?.ToString(@"hh\:mm\:ss") ?? "N/A"
             );
         }
 
@@ -96,20 +100,56 @@ public class ShiftsLoggerService
 
     private async Task EndShift()
     {
-        AnsiConsole.Markup("[bold]Enter name of the employee to end shift:[/] ");
-        var employeeName = _userInput.GetDetailsForStart();
-        var response = await _apiService.EndShiftAsync(employeeName);
+        AnsiConsole.MarkupLine("[yellow on bold]Ukončení směny[/]");
+        
+        // Nejprve zobrazíme aktivní směny
+        var shifts = await _apiService.GetAllShiftsAsync();
+        var activeShifts = shifts.Where(s => s.End == null).ToList();
+        
+        if (!activeShifts.Any())
+        {
+            AnsiConsole.MarkupLine("[yellow]Nejsou žádné aktivní směny k ukončení.[/]");
+            return;
+        }
+        
+        // Zobrazíme tabulku aktivních směn
+        var table = new Table();
+        table.AddColumn("ID");
+        table.AddColumn("Zaměstnanec");
+        table.AddColumn("Začátek");
+        
+        foreach (var shift in activeShifts)
+        {
+            table.AddRow(
+                shift.Id.ToString(),
+                shift.Employee,
+                shift.Start.ToString("dd.MM.yyyy HH:mm")
+            );
+        }
+        
+        AnsiConsole.MarkupLine("[bold]Aktivní směny:[/]");
+        AnsiConsole.Write(table);
+        
+        // Získáme ID směny k ukončení
+        int shiftId = _userInput.GetShiftId();
+        
+        if (!activeShifts.Any(s => s.Id == shiftId))
+        {
+            AnsiConsole.MarkupLine("[red]Zadané ID neodpovídá žádné aktivní směně.[/]");
+            return;
+        }
+        
+        var response = await _apiService.EndShiftAsync(shiftId);
 
         if (response.IsSuccessStatusCode)
         {
-            AnsiConsole.Markup("[green]Shift ended successfully![/]");
+            AnsiConsole.MarkupLine("[green]Směna byla úspěšně ukončena![/]");
         }
         else
         {
-            AnsiConsole.Markup($"[red]Failed to end the shift. Error: {response.StatusCode}[/] ");
+            var error = await response.Content.ReadAsStringAsync();
+            AnsiConsole.MarkupLine($"[red]Nepodařilo se ukončit směnu. Chyba: {error}[/]");
         }
     }
-
-
 }
 

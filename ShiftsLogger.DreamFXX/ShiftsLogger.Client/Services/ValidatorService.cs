@@ -2,12 +2,12 @@
 
 public class ValidatorService
 {
-    public string? ValidateString(string? input)
+    public string ValidateString(string? input)
     {
-        if (string.IsNullOrEmpty(input))
+        if (string.IsNullOrWhiteSpace(input))
         {
-            return null;
+            return string.Empty;
         }
-        return input;
+        return input.Trim();
     }
 }
