@@ -23,19 +23,19 @@ public class APIService
 
             if (shift == null)
             {
-                throw new InvalidOperationException("Deserializace objektu Shift se nezdařila. Zkuste to prosím znovu.");
+                throw new InvalidOperationException("Failed to deserialize the Shift object. Please try again.");
             }
             return shift;
         }
         catch (HttpRequestException ex)
         {
-            AnsiConsole.Markup($"[red]Chyba: {ex.Message}. Aplikace bude nyní ukončena.[/]");
+            AnsiConsole.Markup($"[red]Error: {ex.Message}. The application will now close.[/]");
             Environment.Exit(0);
             return null;
         }
         catch (InvalidOperationException ex)
         {
-            AnsiConsole.Markup($"[red]Chyba: {ex.Message}. Aplikace bude nyní ukončena.[/]");
+            AnsiConsole.Markup($"[red]Error: {ex.Message}. The application will now close.[/]");
             Environment.Exit(0);
             return null;
         }
@@ -52,7 +52,7 @@ public class APIService
         }
         catch (Exception ex)
         {
-            AnsiConsole.Markup($"[red]Chyba při načítání směn: {ex.Message}[/]");
+            AnsiConsole.Markup($"[red]Error retrieving shifts: {ex.Message}[/]");
             return new List<Shift>();
         }
     }

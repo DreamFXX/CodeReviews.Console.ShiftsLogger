@@ -8,8 +8,8 @@ try
 }
 catch (Exception ex)
 {
-    AnsiConsole.MarkupLine($"[red]Kritická chyba: {ex.Message}[/]");
-    Console.WriteLine("Stiskněte libovolnou klávesu pro ukončení...");
+    AnsiConsole.MarkupLine($"[red]Critical error: {ex.Message}[/]");
+    Console.WriteLine("Press any key to exit...");
     Console.ReadKey();
 }
 

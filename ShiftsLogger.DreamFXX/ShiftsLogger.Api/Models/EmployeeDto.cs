@@ -4,6 +4,6 @@ namespace ShiftsLogger.Api.Models;
 
 public class EmployeeDto
 {
-    [JsonPropertyName("workerName")]
+    [JsonPropertyName("employeeName")]
     public string? EmployeeName { get; set; }
 }

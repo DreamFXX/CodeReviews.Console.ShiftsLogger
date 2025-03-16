@@ -13,12 +13,12 @@ public class UserInput
 
     public EmployeeDto GetEmployeeName()
     {
-        AnsiConsole.Markup("[bold]Zadejte jméno zaměstnance:[/] ");
+        AnsiConsole.Markup("[bold]Enter employee name:[/] ");
         EmployeeDto employeeDto = new();
         employeeDto.EmployeeName = _validatorService.ValidateString(Console.ReadLine());
         if (string.IsNullOrWhiteSpace(employeeDto.EmployeeName))
         {
-            AnsiConsole.MarkupLine("[yellow]Jméno zaměstnance je povinné.[/]");
+            AnsiConsole.MarkupLine("[yellow]Employee name is required.[/]");
             return GetEmployeeName();
         }
         return employeeDto;
@@ -26,14 +26,14 @@ public class UserInput
 
     public int GetShiftId()
     {
-        AnsiConsole.Markup("[bold]Zadejte ID směny:[/] ");
+        AnsiConsole.Markup("[bold]Enter shift ID:[/] ");
         string input = Console.ReadLine() ?? "";
         if (int.TryParse(input, out int shiftId) && shiftId > 0)
         {
             return shiftId;
         }
         
-        AnsiConsole.MarkupLine("[yellow]Neplatné ID směny. Zadejte prosím kladné číslo.[/]");
+        AnsiConsole.MarkupLine("[yellow]Invalid shift ID. Please enter a positive number.[/]");
         return GetShiftId();
     }
 }

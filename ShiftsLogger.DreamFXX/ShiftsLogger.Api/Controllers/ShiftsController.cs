@@ -38,12 +38,12 @@ public class ShiftsController : ControllerBase
         var shift = await _context.Shifts.FindAsync(id);
         if (shift == null)
         {
-            return NotFound("Směna nebyla nalezena.");
+            return NotFound("Shift not found.");
         }
 
         if (shift.EndTime != null)
         {
-            return BadRequest("Tato směna již byla ukončena.");
+            return BadRequest("This shift has already been ended.");
         }
 
         shift.EndTime = DateTime.Now;
@@ -57,7 +57,7 @@ public class ShiftsController : ControllerBase
         }
         catch (DbUpdateConcurrencyException)
         {
-            throw new Exception("Při aktualizaci směny došlo k chybě.");
+            throw new Exception("An error occurred while updating the shift.");
         }
 
         return NoContent();
@@ -65,17 +65,17 @@ public class ShiftsController : ControllerBase
 
     // POST: api/Shifts
     [HttpPost]
-    public async Task<ActionResult<Shift>> PostShift(EmployeeDto employeeName)
+    public async Task<ActionResult<Shift>> PostShift(EmployeeDto employeeDto)
     {
         var openShift = await _context.Shifts.FirstOrDefaultAsync(s => s.EndTime == null);
         if (openShift != null)
         {
-            return BadRequest("Jiná směna je právě otevřená! Nejprve ji ukončete a poté začněte novou.");
+            return BadRequest("Another shift is currently open! End it first before starting a new one.");
         }
 
         var shift = new Shift
         {
-            EmployeeName = employeeName.workerName ?? "Neznámý",
+            EmployeeName = employeeDto.EmployeeName ?? "N/A",
             StartTime = DateTime.Now
         };
         _context.Shifts.Add(shift);
