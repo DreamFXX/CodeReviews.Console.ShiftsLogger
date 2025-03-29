@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+namespace ShiftsLoggerAPI.Models;
 
 public class Shift
 {
