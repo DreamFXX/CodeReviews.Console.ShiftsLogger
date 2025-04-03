@@ -1,0 +1,16 @@
+{
+    "files.autoSave": "afterDelay",
+    "editor.tabSize": 2,
+    "editor.cursorStyle": "line-thin",
+    "editor.multiCursorModifier": "ctrlCmd",
+    "editor.wordWrap": "off",
+    "editor.autoClosingBrackets": "always",
+    "editor.autoClosingComments": "always",
+    "editor.autoClosingDelete": "always",
+    "editor.autoClosingQuotes": "always",
+    "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+    "editor.columnSelection": false,
+    "dataworkspace.excludedProjects": [
+        "D/D.sqlproj"
+    ]
+}
