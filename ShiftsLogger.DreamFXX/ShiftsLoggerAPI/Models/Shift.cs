@@ -1,14 +1,12 @@
-using System;
+namespace ShiftsLoggerAPI.Models;    
 
-namespace ShiftsLoggerAPI.Models;
-
-public class Shift{
+public class Shift
+{
     public int Id { get; set; }
+    public string EmployeeName { get; set; } = string.Empty;
     public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }
-    public TimeSpan Duration => EndTime - StartTime;
-    
-    public string WorkerId { get; set; } = string.Empty;
     public string Notes { get; set; } = string.Empty;
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+    public TimeSpan Duration => EndTime - StartTime;
 }
