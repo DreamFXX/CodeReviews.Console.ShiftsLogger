@@ -1,0 +1,15 @@
+{
+  "profiles": {
+    "DrinksAPIClient.DreamFXX": {
+      "commandName": "Project",
+      "hotReloadEnabled": true,
+      "nativeDebugging": true,
+      "jsWebView2Debugging": true,
+      "sqlDebugging": true
+    },
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": "Ubuntu"
+    }
+  }
+}

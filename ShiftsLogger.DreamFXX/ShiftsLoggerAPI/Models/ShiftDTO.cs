@@ -1,8 +1,6 @@
-using System;
-
 namespace ShiftsLoggerAPI.Models
 {
-    public class ShiftDTO
+    public class ShiftDto
     {
         public int Id { get; set; }
         public string EmployeeName { get; set; } = string.Empty;

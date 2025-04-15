@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using ShiftsLoggerAPI.Data;
 
@@ -24,5 +23,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 
+app.MapSwagger();
 
-app.Run();
+await app.RunAsync();

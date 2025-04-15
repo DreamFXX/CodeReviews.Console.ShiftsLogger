@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35919.96 d17.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShiftsLoggerClient", "ShiftsLoggerClient.csproj", "{5DDDA76F-1D4B-43D1-ACFE-8972A126107E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrinksAPIClient.DreamFXX", "DrinksAPIClient.DreamFXX.csproj", "{73B2833D-5CEA-4CB4-9719-92EEC6C8D930}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5DDDA76F-1D4B-43D1-ACFE-8972A126107E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5DDDA76F-1D4B-43D1-ACFE-8972A126107E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5DDDA76F-1D4B-43D1-ACFE-8972A126107E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5DDDA76F-1D4B-43D1-ACFE-8972A126107E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73B2833D-5CEA-4CB4-9719-92EEC6C8D930}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73B2833D-5CEA-4CB4-9719-92EEC6C8D930}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73B2833D-5CEA-4CB4-9719-92EEC6C8D930}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73B2833D-5CEA-4CB4-9719-92EEC6C8D930}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {0323C47E-B156-425B-9B41-DCE02468EF69}
+		SolutionGuid = {1231E715-AD06-46EA-BBBD-19710BC8EE97}
 	EndGlobalSection
 EndGlobal
